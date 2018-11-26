@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.example</groupId>
-    <artifactId>Maven</artifactId>
+    <artifactId>Obfuscation</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>01-Maven</name>
-    <description>Example Maven</description>
+    <name>01-MavenObfuscation</name>
+    <description>Example Maven Obfuscation</description>
 
     <developers>
         <developer>
@@ -24,6 +24,7 @@
         <com.google.guava.version>23.0</com.google.guava.version>
         <maven.jar.plugin.version>3.0.0</maven.jar.plugin.version>
         <maven.install.plugin.version>3.0.0-M1</maven.install.plugin.version>
+        <proguard.maven.plugin.version>2.0.14</proguard.maven.plugin.version>
     </properties>
 
     <dependencies>
@@ -44,7 +45,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.L01Maven.Main</mainClass>
+                            <mainClass>com.example.L01MavenObfuscation.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -69,7 +70,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.example.L01Maven.Main</mainClass>
+                            <mainClass>com.example.L01MavenObfuscation.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -79,6 +80,45 @@
                 <artifactId>maven-install-plugin</artifactId>
                 <version>${maven.install.plugin.version}</version>
             </plugin>
+
+           <plugin>
+                <groupId>com.github.wvengen</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>${proguard.maven.plugin.version}</version>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard-base</artifactId>
+                        <version>5.3.3</version>
+                    </dependency>
+                </dependencies>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>proguard</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <obfuscate>true</obfuscate>
+                    <outjar>01-MavenObfuscation-out.jar</outjar>
+
+                    <options>
+                        <option>-keep public class com.example.L01MavenObfuscation.Main {public static void main(java.lang.String[]);}</option>
+                        <option>-dontwarn</option>
+                    </options>
+
+                    <libs>
+                        <lib>${java.home}/lib/rt.jar</lib>
+                    </libs>
+                </configuration>
+            </plugin>
+
+
         </plugins>
     </build>
 
