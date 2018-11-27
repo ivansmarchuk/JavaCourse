@@ -12,6 +12,7 @@ public class Main {
     private static final int MEASURE_COUNT = 1;
 
     public static void main(String... args) {
+
         final Collection<Integer> example = new ArrayList<Integer>();
 
         int min = 0;
