@@ -20,5 +20,6 @@ public class Main {
 
         benchmark.measure(() -> new Benchmark(10), "Benchmark(10)");
         benchmark.clean();
+
     }
 }
